@@ -1,43 +1,143 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
-android {
-    namespace 'com.example.currencyexchanger'
-    compileSdk 33
+apply from: "config.gradle"
+apply from: "dependencies.gradle"
 
+android {
+    compileSdk configs.compileSdk
     defaultConfig {
-        applicationId "com.example.currencyexchanger"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId 'com.example.caswithflows'
+        minSdk configs.minSdk
+        targetSdk configs.targetSdk
+        versionCode configs.versionCode
+
+        versionName configs.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+        buildConfigField "String", "DATABASE_NAME", DATABASE_NAME
+        buildConfigField "String", "SHARED_PREF_NAME", SHARED_PREF_NAME
     }
 
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            zipAlignEnabled false
+            manifestPlaceholders = [enableCrashReporting: "false"]
+            buildConfigField "String", "BASE_APP_URL", DEV_BASE_APP_URL
+        }
+        staging {
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled false
+            manifestPlaceholders = [enableCrashReporting: "true"]
+            buildConfigField "String", "BASE_APP_URL", STAGING_BASE_APP_URL
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [enableCrashReporting: "true"]
+            buildConfigField "String", "BASE_APP_URL", PROD_BASE_APP_URL
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0-beta01'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.7.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // AndroidX
+    implementation androidXDependencies.activityCompose
+    implementation androidXDependencies.appCompat
+    implementation androidXDependencies.compose_ui
+    implementation androidXDependencies.composeMaterial
+    implementation androidXDependencies.toolingPreview
+    implementation androidXDependencies.dataBindingCommon
+    implementation androidXDependencies.dataBindingRuntime
+    debugImplementation androidXDependencies.textManifest
+    debugImplementation androidXDependencies.uiTooling
+    implementation androidXDependencies.coreKTX
+    implementation androidXDependencies.coreSplashscreen
+    implementation androidXDependencies.lifecycleRuntimeKTX
+    implementation androidXDependencies.lifecyceViewModelKTX
+    implementation androidXDependencies.lifecycleViewModelCompose
+    implementation androidXDependencies.navigationCompose
+    implementation androidXDependencies.pagingCommonKTX
+    implementation androidXDependencies.roomKTX
+    implementation androidXDependencies.roomRuntime
+    implementation androidXDependencies.sqllite
+    kapt androidXDependencies.roomCompiler
+
+    // Google
+    implementation "com.google.accompanist:accompanist-coil:0.10.0"
+    implementation "com.google.accompanist:accompanist-flowlayout:0.17.0"
+    implementation 'com.google.android.material:material:1.4.0'
+
+    // Kotlin Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+
+    // Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.37"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha03'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
+    implementation 'com.squareup.moshi:moshi:1.14.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Coil
+    implementation 'io.coil-kt:coil:1.1.1'
+
+    // Tests
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 }
