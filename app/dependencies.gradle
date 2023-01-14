@@ -1,0 +1,39 @@
+ext {
+    // AndroidX
+    compose_version = "1.0.1"
+    androidXVersion1_0_0 = "1.0.0"
+    androidXVersion1_3_1 = "1.3.1"
+    androidXVersion1_6_0 = "1.6.0"
+    androidXVersion2_0_1 = "2.0.1"
+    androidXVersion2_2_5 = "2.2.5"
+    androidXVersion2_3_1 = "2.3.1"
+    androidXVersion3_1_1 = "3.1.1"
+    androidXVersion4_1_3 = "4.1.3"
+    androidXVersion7_3_1 = "7.3.1"
+    androidXVersion1_0_0_alpha07 = "1.0.0-alpha07"
+    androidXVersion2_4_0_alpha08 = "2.4.0-alpha08"
+
+    androidXDependencies = [
+            activityCompose           :"androidx.activity:activity-compose:$androidXVersion1_3_1",
+            appCompat                 :"androidx.appcompat:appcompat:$androidXVersion1_3_1",
+            compose_ui                :"androidx.compose.ui:ui:$compose_version",
+            composeMaterial           :"androidx.compose.material:material:$compose_version",
+            toolingPreview            :"androidx.compose.ui:ui-tooling-preview:$compose_version",
+            dataBindingRuntime        :"androidx.databinding:databinding-runtime:$androidXVersion7_3_1",
+            dataBindingCommon         :"androidx.databinding:databinding-common:$androidXVersion4_1_3",
+            textManifest              :"androidx.compose.ui:ui-test-manifest:$compose_version",
+            uiTooling                 :"androidx.compose.ui:ui-tooling:$compose_version",
+            coreKTX                   :"androidx.core:core-ktx:$androidXVersion1_6_0",
+            coreSplashscreen          :"androidx.core:core-splashscreen:$androidXVersion1_0_0",
+            lifecycleRuntimeKTX       :"androidx.lifecycle:lifecycle-runtime-ktx:$androidXVersion2_3_1",
+            lifecyceViewModelKTX      :"androidx.lifecycle:lifecycle-viewmodel-ktx:$androidXVersion2_3_1",
+            lifecycleViewModelCompose :"androidx.lifecycle:lifecycle-viewmodel-compose:$androidXVersion1_0_0_alpha07",
+            navigationCompose         :"androidx.navigation:navigation-compose:$androidXVersion2_4_0_alpha08",
+            pagingCommonKTX           :"androidx.paging:paging-common-ktx:$androidXVersion3_1_1",
+            roomKTX                   :"androidx.room:room-ktx:$androidXVersion2_2_5",
+            roomRuntime               :"androidx.room:room-runtime:$androidXVersion2_2_5",
+            sqllite                   :"androidx.sqlite:sqlite:$androidXVersion2_0_1",
+            roomCompiler              :"androidx.room:room-compiler:$androidXVersion2_2_5"
+    ]
+
+}
