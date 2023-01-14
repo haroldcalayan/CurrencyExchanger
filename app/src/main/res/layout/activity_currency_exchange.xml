@@ -1,0 +1,250 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.haroldcalayan.currencyexchanger.presentation.ui.currency_exchange.CurrencyExchangeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview_my_balance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15sp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:text="@string/text_view_my_balance_title"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customToolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_currency_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/textview_my_balance_title"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_currency_balance" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview_currency_exchange_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_30dp"
+            android:text="@string/textview_currency_exchange_title"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_currency_balance" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_round_background_up"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:src="@drawable/round_corner_upward"
+            app:layout_constraintStart_toStartOf="@id/textview_currency_exchange_title"
+            app:layout_constraintTop_toBottomOf="@id/textview_currency_exchange_title" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_arrow_upward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_upward"
+            app:layout_constraintBottom_toBottomOf="@id/image_round_background_up"
+            app:layout_constraintEnd_toEndOf="@id/image_round_background_up"
+            app:layout_constraintStart_toStartOf="@id/image_round_background_up"
+            app:layout_constraintTop_toTopOf="@id/image_round_background_up" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:text="@string/text_view_sell"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_upward"
+            app:layout_constraintStart_toEndOf="@id/image_round_background_up"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_upward" />
+
+        <ImageView
+            android:id="@+id/image_keyboard_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:src="@drawable/keyboard_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_upward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_upward" />
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/textView_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:backgroundTint="@android:color/transparent"
+            android:editable="false"
+            android:minHeight="@dimen/size_48dp"
+            android:paddingHorizontal="@dimen/size_20dp"
+            android:text="@string/textview_eur"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_upward"
+            app:layout_constraintEnd_toStartOf="@id/image_keyboard_arrow"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_upward"
+            tools:ignore="Deprecated" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_input_sell"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="@string/text_default_currency_value"
+            android:inputType="numberDecimal"
+            android:minHeight="@dimen/size_48dp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_upward"
+            app:layout_constraintEnd_toStartOf="@id/textView_currency"
+            app:layout_constraintStart_toEndOf="@+id/materialTextView2"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_upward" />
+
+        <View
+            android:id="@+id/view_currency_exchange"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_2dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:background="@color/light_gray"
+            app:layout_constraintTop_toBottomOf="@id/image_round_background_up" />
+
+        <ImageView
+            android:id="@+id/image_round_background_down"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:src="@drawable/round_corner_downward"
+            app:layout_constraintStart_toStartOf="@id/textview_currency_exchange_title"
+            app:layout_constraintTop_toTopOf="@id/view_currency_exchange" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_arrow_downward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/arrow_downward"
+            app:layout_constraintBottom_toBottomOf="@id/image_round_background_down"
+            app:layout_constraintEnd_toEndOf="@id/image_round_background_down"
+            app:layout_constraintStart_toStartOf="@id/textview_currency_exchange_title"
+            app:layout_constraintTop_toTopOf="@id/image_round_background_down" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_15dp"
+            android:text="@string/textview_receive"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_downward"
+            app:layout_constraintStart_toEndOf="@id/image_round_background_down"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_downward" />
+
+        <ImageView
+            android:id="@+id/image_keyboard_arrow_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_15dp"
+            android:src="@drawable/keyboard_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_downward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_downward" />
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/textView_currency_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:backgroundTint="@android:color/transparent"
+            android:editable="false"
+            android:minHeight="@dimen/size_48dp"
+            android:paddingHorizontal="@dimen/size_20dp"
+            android:text="@string/textview_usd"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_downward"
+            app:layout_constraintEnd_toStartOf="@id/image_keyboard_arrow_receive"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_downward"
+            tools:ignore="Deprecated" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview_value_receive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20dp"
+            android:text="@string/text_default_currency_value"
+            android:textAlignment="textEnd"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/image_arrow_downward"
+            app:layout_constraintEnd_toStartOf="@id/textView_currency_receive"
+            app:layout_constraintStart_toEndOf="@+id/materialTextView"
+            app:layout_constraintTop_toTopOf="@id/image_arrow_downward"
+            tools:text="0.00" />
+
+        <View
+            android:id="@+id/view_currency_exchange_receive"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_2dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:background="@color/light_gray"
+            app:layout_constraintTop_toBottomOf="@id/image_round_background_down" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/size_24dp"
+            android:layout_marginTop="@dimen/size_40dp"
+            android:layout_marginEnd="@dimen/size_24dp"
+            android:enabled="false"
+            android:paddingVertical="@dimen/size_18dp"
+            android:text="@string/button_submit"
+            android:textColor="@color/white"
+            android:theme="@style/Theme.MaterialComponents"
+            app:backgroundTint="@color/gray"
+            app:cornerRadius="@dimen/size_30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_round_background_down" />
+
+        <include
+            android:id="@+id/customToolbar"
+            layout="@layout/layout_toolbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
