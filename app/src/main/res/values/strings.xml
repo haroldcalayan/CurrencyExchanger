@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Currency Exchanger</string>
+
+    <!--  Messages  -->
+    <string name="message_generic_error">Please try again later</string>
+    <!--  Repository  -->
+    <string name="message_app_requires_permission">I\'m sorry. This app requires all permissions to be granted</string>
+    <string name="message_keyword_must_not_empty">Keyword must not be empty</string>
+    <string name="message_keyword_is_invalid">Keyword is invalid</string>
+    <string name="message_repository_url_is_empty">Repository url is empty</string>
+
+    <!--  Main  -->
+    <string name="main_hint_enter_keyword">Enter your keyword here</string>
+
+    <string name="currency_exchanger_balance_info">%1$s %2$s</string>
+    <string name="text_view_my_balance_title">My Balance</string>
+    <string name="textview_currency_exchange_title">Currency Exchange</string>
+    <string name="text_view_sell">Sell</string>
+    <string name="textview_receive">Receive</string>
+    <string name="textview_eur">EUR</string>
+    <string name="textview_usd">USD</string>
+    <string name="text_default_currency_value">0.00</string>
+    <string name="button_submit">Submit</string>
+    <string name="textview_loading">Loading...</string>
+    <string name="toolbar_currency_converter">Currency Converter</string>
+    <string name="error_invalid_conversion">Invalid Conversion</string>
+    <string name="title_currency_converted">Currency Converted</string>
+    <string name="neutral_button_done">DONE</string>
+    <string name="text_saved">Saved!</string>
+    <string name="conversion_success_message">You have converted %1$s %2$s to %3$s %4$s. Commission Fee - %5$s %6$s.</string>
+    <string name="convesion_message_insufficient_balance">Insufficient balance</string>
+    <string name="conversion_error_message">Please check your %1$s balance and try again</string>
+    <string name="conversion_neutral_button">OK</string>
+    <string name="convertion_invalid_message">Can not convert %1$s to %2$s currency</string>
 </resources>
