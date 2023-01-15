@@ -13,36 +13,25 @@ import androidx.lifecycle.lifecycleScope
 import com.haroldcalayan.currencyexchanger.R
 import com.haroldcalayan.currencyexchanger.common.Constants.DEFAULT_CURRENCY_VALUE
 import com.haroldcalayan.currencyexchanger.common.base.BaseActivity
-import com.haroldcalayan.currencyexchanger.common.util.AlertDialogHelper
-import com.haroldcalayan.currencyexchanger.common.util.ProgressDialogHelper
-import com.haroldcalayan.currencyexchanger.common.util.clear
-import com.haroldcalayan.currencyexchanger.common.util.toRoundedDecimalString
-import com.haroldcalayan.currencyexchanger.common.util.toRoundedDouble
+import com.haroldcalayan.currencyexchanger.common.util.*
 import com.haroldcalayan.currencyexchanger.databinding.ActivityCurrencyExchangeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class CurrencyExchangeActivity :
-    BaseActivity<CurrencyExchangeViewModel, ActivityCurrencyExchangeBinding>() {
+class CurrencyExchangeActivity : BaseActivity<CurrencyExchangeViewModel, ActivityCurrencyExchangeBinding>() {
+
     override val layoutId = R.layout.activity_currency_exchange
     override val viewModel: CurrencyExchangeViewModel by viewModels()
 
     private lateinit var currencyBalanceAdapter: CurrencyBalanceAdapter
     private lateinit var progressDialog: Dialog
 
-    val context = this
-
     override fun initViews() {
         super.initViews()
-
-        viewModel.getExchangeRates()
-
         initCurrencyBalanceList()
-
         progressDialog = ProgressDialogHelper.progressDialog(this)
-        viewModel.startLoading()
 
         binding.edittextInputSell.setOnClickListener {
             binding.edittextInputSell.selectAll()
@@ -55,12 +44,12 @@ class CurrencyExchangeActivity :
             } else {
                 val receiveValue = if (text.toString().isNotBlank()) {
                     binding.textviewValueReceive.setTextColor(
-                        ContextCompat.getColorStateList(context, R.color.green)
+                        ContextCompat.getColorStateList(this, R.color.green)
                     )
                     "+${text.toString()}"
                 } else {
                     binding.textviewValueReceive.setTextColor(
-                        ContextCompat.getColorStateList(context, R.color.gray)
+                        ContextCompat.getColorStateList(this, R.color.gray)
                     )
                     DEFAULT_CURRENCY_VALUE
                 }
@@ -70,11 +59,13 @@ class CurrencyExchangeActivity :
             viewModel.convertCurrency(text.toString())
             binding.buttonSubmit.isEnabled = text.toString().isNotBlank()
 
-            if (binding.buttonSubmit.isEnabled) {
-                binding.buttonSubmit.backgroundTintList =
-                    ContextCompat.getColorStateList(this, R.color.primaryDarkColor)
-            } else binding.buttonSubmit.backgroundTintList =
-                ContextCompat.getColorStateList(this, R.color.gray)
+            binding.buttonSubmit.backgroundTintList = ContextCompat.getColorStateList(this,
+                if (binding.buttonSubmit.isEnabled) {
+                    R.color.primaryDarkColor
+                } else {
+                    R.color.gray
+                }
+            )
         }
 
         binding.textViewCurrency.onItemClickListener =
@@ -104,6 +95,9 @@ class CurrencyExchangeActivity :
                 )
             }
         }
+
+        viewModel.getExchangeRates()
+        viewModel.startLoading()
     }
 
     override fun subscribe() {
@@ -122,17 +116,15 @@ class CurrencyExchangeActivity :
                                 currenciesSeller.add(item.currencyName.orEmpty())
                             }
                         }
-                    val optionsSeller =
-                        ArrayAdapter(context, R.layout.dropdown_text, currenciesSeller)
-                    val optionsReceiver =
-                        ArrayAdapter(context, R.layout.dropdown_text, currenciesReceiver)
+                    val optionsSeller = ArrayAdapter(this@CurrencyExchangeActivity, R.layout.dropdown_text, currenciesSeller)
+                    val optionsReceiver = ArrayAdapter(this@CurrencyExchangeActivity, R.layout.dropdown_text, currenciesReceiver)
 
                     binding.textViewCurrency.setAdapter(optionsSeller)
                     binding.textViewCurrencyReceive.setAdapter(optionsReceiver)
 
                     binding.textViewCurrency.setOnClickListener {
                         binding.textViewCurrency.showDropDown()
-                        context.hideKeyboard()
+                        hideKeyboard()
                     }
 
                     binding.textViewCurrencyReceive.setOnClickListener {
@@ -150,19 +142,19 @@ class CurrencyExchangeActivity :
                     if (it.toDouble() > 0.00) {
                         binding.textviewValueReceive.setTextColor(
                             ContextCompat.getColorStateList(
-                                context,
+                                this@CurrencyExchangeActivity,
                                 R.color.green
                             )
                         )
                         binding.textviewValueReceive.text = "+$number"
                     } else if ((it.toDouble() == 0.00)) {
                         binding.textviewValueReceive.setTextColor(
-                            ContextCompat.getColorStateList(context, R.color.gray)
+                            ContextCompat.getColorStateList(this@CurrencyExchangeActivity, R.color.gray)
                         )
                         binding.textviewValueReceive.text = "$number"
                     } else {
                         binding.textviewValueReceive.setTextColor(
-                            ContextCompat.getColorStateList(context, R.color.red)
+                            ContextCompat.getColorStateList(this@CurrencyExchangeActivity, R.color.red)
                         )
                         binding.textviewValueReceive.text = "-$number"
                     }
@@ -226,8 +218,7 @@ class CurrencyExchangeActivity :
                 override fun onPositiveButtonClicked() {
                     viewModel.getCurrencyBalance()
                     viewModel.reAssignStates()
-                    Toast.makeText(context, getString(R.string.text_saved), Toast.LENGTH_SHORT)
-                        .show()
+                    this@CurrencyExchangeActivity.showToastShort(getString(R.string.text_saved))
                 }
             }
 
@@ -256,7 +247,7 @@ class CurrencyExchangeActivity :
     }
 
     private fun hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.applicationWindowToken, 0)
     }
 }

@@ -128,10 +128,8 @@ class CurrencyExchangeViewModel @Inject constructor(
     ) {
         val currencyBalance: MutableList<CurrencyBalance> = mutableListOf()
         exchangeRate?.rates?.forEach { currency ->
-            val balance =
-                if (isInitialBalance && currency.key == BASE_CURRENCY) INITIAL_BALANCE_VALUE else NO_CURRENCY_VALUE
-            val date =
-                if (isInitialBalance && currency.key == BASE_CURRENCY) DateUtil.getCurrentDate() else null
+            val balance = if (isInitialBalance && currency.key == BASE_CURRENCY) INITIAL_BALANCE_VALUE else NO_CURRENCY_VALUE
+            val date = if (isInitialBalance && currency.key == BASE_CURRENCY) DateUtil.getCurrentDate() else null
             val isBase = currency.key == BASE_CURRENCY
             currencyBalance.add(
                 CurrencyBalance(
